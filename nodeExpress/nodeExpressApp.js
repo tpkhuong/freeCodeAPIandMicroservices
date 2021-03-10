@@ -111,14 +111,33 @@ var absolutePath = __dirname + "/views/index.html";
 
 app.use("/public", express.static(__dirname + "/public"));
 
+app.use(function middleware(req, res, next) {
+  if (req.protocol == "http") {
+    return res.redirect(`https://${req.header.host}${req.url}`);
+  }
+  var str = `${req.method}${req.path} - ${req.ip}`;
+  console.log(str);
+  return next();
+});
+
 app.get("/", function (req, res) {
   res.sendFile(absolutePath);
 });
 
 app.get("/json", function (req, res) {
-  res.json({
-    message: "Hello json",
-  });
+  if (process.env.MESSAGE_STYLE == "UPPERCASE") {
+    res.json({
+      message: "Hello json",
+    });
+  }
+});
+
+app.get("/json", function (req, res) {
+  if (process.env.MESSAGE_STYLE == "uppercase") {
+    res.json({
+      message: "Hello json",
+    });
+  }
 });
 
 module.exports = app;
