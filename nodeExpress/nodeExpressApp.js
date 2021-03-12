@@ -107,6 +107,9 @@ var app = express();
 
 var absolutePath = __dirname + "/views/index.html";
 
+bodyParser.urlencoded({ extended: false });
+app.use(bodyParser.json());
+
 // console.log("Hello World");
 
 app.use("/public", express.static(__dirname + "/public"));
@@ -138,6 +141,33 @@ app.get("/json", function (req, res) {
       message: "Hello json",
     });
   }
+});
+
+app.get(
+  "/now",
+  function getTime(req, res) {
+    req.time = new Date().toString();
+    next();
+  },
+  function middleware(req, res) {
+    res.send({ time: req.time });
+  }
+);
+
+app.get("/:word/echo", function repeatEcho(req, res) {
+  var { word } = req.params;
+  res.json({ echo: word });
+});
+
+app.get("/name", function getName(req, res) {
+  var { first: firstName, last: lastName } = req.query;
+
+  res.json({ name: `${firstName} ${lastName}` });
+});
+
+app.post("/", function postStuff(req, res) {
+  var string = `${req.body.first} ${req.body.last}`;
+  res.json({ name: string });
 });
 
 module.exports = app;
