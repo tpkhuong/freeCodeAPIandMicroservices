@@ -198,3 +198,117 @@ exports.createManyPeople = createManyPeople;
 exports.removeById = removeById;
 exports.removeManyPeople = removeManyPeople;
 exports.queryChain = queryChain;
+
+/***** rerun ****/
+
+require("dotenv").config();
+var mongoose = require("mongoose");
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+var Schema = mongoose.Schema;
+
+var Person = new Schema({
+  name: { type: string, required: true },
+  age: number,
+  favoriteFoods: [],
+});
+
+/***** or *****/
+
+const Person = mongoose.model("Person", personSchema);
+
+const createAndSavePerson = (done) => {
+  var someoneName = new person({
+    name: "Marvel",
+    age: 10,
+    favoriteFoods: ["eggs", "bread", "banana"],
+  });
+  soneoneName.save(function (err, data) {
+    if (err) return console.error(err);
+    done(null, data);
+  });
+};
+
+const createManyPeople = (arrayOfPeople, done) => {
+  var arrayOfPeople = [
+    { name: "Spider-man", age: 17, favoriteFoods: ["bugs", "water"] },
+    { name: "Deadpool", age: 100, favoriteFoods: ["pizza", "beer"] },
+    { name: "Iron-man", age: 50, favoriteFoods: ["burgers", "fries"] },
+  ];
+  var createManyPeople = function (arrayOfPeople, done) {
+    Person.create(arrayOfPeople, function (err, people) {
+      if (err) return console.log(err);
+      done(null, people);
+    });
+  };
+  done(null /*, data*/);
+};
+
+const findPeopleByName = (personName, done) => {
+  Person.find({ name: personName }, function (err, personFound) {
+    if (err) return console.log(err);
+    done(null, personFound);
+  });
+};
+
+const findOneByFood = (food, done) => {
+  Person.findOne({ favoriteFoods: food }, function (err, data) {
+    if (err) return console.log(err);
+    done(null, data);
+  });
+};
+
+const findPersonById = (personId, done) => {
+  done(null /*, data*/);
+};
+
+const findEditThenSave = (personId, done) => {
+  const foodToAdd = "hamburger";
+
+  done(null /*, data*/);
+};
+
+const findAndUpdate = (personName, done) => {
+  const ageToSet = 20;
+
+  done(null /*, data*/);
+};
+
+const removeById = (personId, done) => {
+  done(null /*, data*/);
+};
+
+const removeManyPeople = (done) => {
+  const nameToRemove = "Mary";
+
+  done(null /*, data*/);
+};
+
+const queryChain = (done) => {
+  const foodToSearch = "burrito";
+
+  done(null /*, data*/);
+};
+
+/** **Well Done !!**
+/* You completed these challenges, let's go celebrate !
+ */
+
+//----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
+
+exports.PersonModel = Person;
+exports.createAndSavePerson = createAndSavePerson;
+exports.findPeopleByName = findPeopleByName;
+exports.findOneByFood = findOneByFood;
+exports.findPersonById = findPersonById;
+exports.findEditThenSave = findEditThenSave;
+exports.findAndUpdate = findAndUpdate;
+exports.createManyPeople = createManyPeople;
+exports.removeById = removeById;
+exports.removeManyPeople = removeManyPeople;
+exports.queryChain = queryChain;
+
+/***** rerun ****/
